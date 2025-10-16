@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "movies",
+  "info": {
+    "singularName": "movie",
+    "pluralName": "movies",
+    "displayName": "Movie"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "db_id": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "overview": {
+      "type": "text"
+    },
+    "release_date": {
+      "type": "date"
+    },
+    "vote_average": {
+      "type": "decimal"
+    },
+    "vote_count": {
+      "type": "biginteger"
+    },
+    "actors": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::actor.actor",
+      "mappedBy": "movies"
+    },
+    "directors": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::director.director",
+      "mappedBy": "movies"
+    },
+    "genres": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::genre.genre"
+    }
+  }
+}

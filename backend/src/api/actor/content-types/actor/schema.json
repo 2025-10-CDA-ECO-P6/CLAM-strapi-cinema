@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "actors",
+  "info": {
+    "singularName": "actor",
+    "pluralName": "actors",
+    "displayName": "Actor"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "db_id": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "biography": {
+      "type": "text"
+    },
+    "name": {
+      "type": "string"
+    },
+    "profile_path": {
+      "type": "string"
+    },
+    "place_of_birth": {
+      "type": "string"
+    },
+    "birthday": {
+      "type": "date"
+    },
+    "popularity": {
+      "type": "decimal"
+    },
+    "movies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::movie.movie",
+      "inversedBy": "actors"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "directors",
+  "info": {
+    "singularName": "director",
+    "pluralName": "directors",
+    "displayName": "Director"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "db_id": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "biography": {
+      "type": "text"
+    },
+    "place_of_birth": {
+      "type": "string"
+    },
+    "birthday": {
+      "type": "date"
+    },
+    "profile_path": {
+      "type": "string"
+    },
+    "movies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::movie.movie",
+      "inversedBy": "directors"
+    }
+  }
+}
