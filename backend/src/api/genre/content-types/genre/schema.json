@@ -4,10 +4,10 @@
   "info": {
     "singularName": "genre",
     "pluralName": "genres",
-    "displayName": "Genre"
+    "displayName": "Genres"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -17,6 +17,12 @@
     },
     "name": {
       "type": "string"
+    },
+    "movies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::movie.movie",
+      "inversedBy": "genres"
     }
   }
 }
