@@ -1,0 +1,16 @@
+{
+  "name": "cineverse-frontend",
+  "version": "1.0.0",
+  "description": "Frontend pour Cineverse avec Alpine.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["cinema", "frontend", "alpine"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
