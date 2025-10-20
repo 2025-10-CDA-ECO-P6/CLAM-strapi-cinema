@@ -7,7 +7,7 @@ module.exports = {
    * Cron format: second minute hour day month weekday
    * '0 0 10 * * *' = At 10:00:00 AM every day
    */
-  tmdbImport: {
+  tmdbDailyImport: {
     task: async ({ strapi }) => {
       try {
         console.log('🕙 Starting scheduled TMDb import at', new Date().toISOString());

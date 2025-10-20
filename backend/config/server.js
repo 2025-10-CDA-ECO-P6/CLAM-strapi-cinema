@@ -1,3 +1,5 @@
+const { tmdbDailyImport } = require('./cronjob');
+
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -9,6 +11,6 @@ module.exports = ({ env }) => ({
   },
   cron: {
     enabled: true,
-    tasks: require('./cronjob'),
+    tasks: tmdbDailyImport,
   },
 });
