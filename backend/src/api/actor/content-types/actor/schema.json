@@ -4,10 +4,10 @@
   "info": {
     "singularName": "actor",
     "pluralName": "actors",
-    "displayName": "Actor"
+    "displayName": "Actors"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -15,23 +15,20 @@
       "type": "biginteger",
       "unique": true
     },
-    "biography": {
-      "type": "text"
-    },
     "name": {
       "type": "string"
     },
-    "profile_path": {
-      "type": "string"
-    },
-    "place_of_birth": {
-      "type": "string"
+    "biography": {
+      "type": "text"
     },
     "birthday": {
       "type": "date"
     },
-    "popularity": {
-      "type": "decimal"
+    "place_of_birth": {
+      "type": "string"
+    },
+    "profile_path": {
+      "type": "string"
     },
     "movies": {
       "type": "relation",

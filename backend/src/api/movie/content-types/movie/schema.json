@@ -4,10 +4,10 @@
   "info": {
     "singularName": "movie",
     "pluralName": "movies",
-    "displayName": "Movie"
+    "displayName": "Movies"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -44,8 +44,12 @@
     },
     "genres": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::genre.genre"
+      "relation": "manyToMany",
+      "target": "api::genre.genre",
+      "mappedBy": "movies"
+    },
+    "poster_path": {
+      "type": "string"
     }
   }
 }

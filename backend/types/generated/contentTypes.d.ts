@@ -433,12 +433,12 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiActorActor extends Struct.CollectionTypeSchema {
   collectionName: 'actors';
   info: {
-    displayName: 'Actor';
+    displayName: 'Actors';
     pluralName: 'actors';
     singularName: 'actor';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     biography: Schema.Attribute.Text;
@@ -453,7 +453,6 @@ export interface ApiActorActor extends Struct.CollectionTypeSchema {
     movies: Schema.Attribute.Relation<'manyToMany', 'api::movie.movie'>;
     name: Schema.Attribute.String;
     place_of_birth: Schema.Attribute.String;
-    popularity: Schema.Attribute.Decimal;
     profile_path: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
@@ -465,12 +464,12 @@ export interface ApiActorActor extends Struct.CollectionTypeSchema {
 export interface ApiDirectorDirector extends Struct.CollectionTypeSchema {
   collectionName: 'directors';
   info: {
-    displayName: 'Director';
+    displayName: 'Directors';
     pluralName: 'directors';
     singularName: 'director';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     biography: Schema.Attribute.Text;
@@ -499,12 +498,12 @@ export interface ApiDirectorDirector extends Struct.CollectionTypeSchema {
 export interface ApiGenreGenre extends Struct.CollectionTypeSchema {
   collectionName: 'genres';
   info: {
-    displayName: 'Genre';
+    displayName: 'Genres';
     pluralName: 'genres';
     singularName: 'genre';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -514,6 +513,7 @@ export interface ApiGenreGenre extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::genre.genre'> &
       Schema.Attribute.Private;
+    movies: Schema.Attribute.Relation<'manyToMany', 'api::movie.movie'>;
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
@@ -525,12 +525,12 @@ export interface ApiGenreGenre extends Struct.CollectionTypeSchema {
 export interface ApiMovieMovie extends Struct.CollectionTypeSchema {
   collectionName: 'movies';
   info: {
-    displayName: 'Movie';
+    displayName: 'Movies';
     pluralName: 'movies';
     singularName: 'movie';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     actors: Schema.Attribute.Relation<'manyToMany', 'api::actor.actor'>;
@@ -542,11 +542,12 @@ export interface ApiMovieMovie extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::director.director'
     >;
-    genres: Schema.Attribute.Relation<'oneToMany', 'api::genre.genre'>;
+    genres: Schema.Attribute.Relation<'manyToMany', 'api::genre.genre'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::movie.movie'> &
       Schema.Attribute.Private;
     overview: Schema.Attribute.Text;
+    poster_path: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     release_date: Schema.Attribute.Date;
     title: Schema.Attribute.String;
