@@ -20,7 +20,6 @@
     "@strapi/plugin-cloud": "5.27.0",
     "@strapi/plugin-documentation": "^5.28.0",
     "@strapi/plugin-users-permissions": "5.27.0",
-    "@strapi/strapi": "5.27.0",
     "axios": "^1.12.2",
     "better-sqlite3": "11.3.0",
     "fs-extra": "^10.0.0",
@@ -39,5 +38,9 @@
   "strapi": {
     "uuid": "f93d2329-d919-46fa-a996-4017ab95fc2d",
     "installId": "a0a2374abf4ec6aed8eb50d1f40a25e0c49a886e1836a53a655ecf89a6125402"
+  },
+  "devDependencies": {
+    "@strapi/strapi": "^5.28.0",
+    "eslint": "^9.38.0"
   }
 }
