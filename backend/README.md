@@ -56,6 +56,18 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 - [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
 - [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
 
+## 🛠️ Continuous integration (CI)
+
+[![CI - Front & Back Cineverse(Strapi)](https://github.com/2025-10-CDA-ECO-P6/CLAM-strapi-cinema/actions/workflows/ci.yml/badge.svg)](https://github.com/2025-10-CDA-ECO-P6/CLAM-strapi-cinema/actions/workflows/ci.yml)
+
+For the backend CI we have created a simple job with 3 major steps :
+
+- `npm ci` to install dependencies
+- `npm run lint` to run the linter script
+- `npm run build` to test if the build script from strapi works
+
+All the test can be run localy when executing the previously mentioned commands in the `./backend` directory
+
 ---
 
 <sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>

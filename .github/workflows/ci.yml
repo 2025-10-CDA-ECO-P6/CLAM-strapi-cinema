@@ -78,8 +78,8 @@ jobs:
       - name: Install back dependencies
         run: npm ci
 
-      - name: Run back linter (if present)
+      - name: Run back linter
         run: npm run lint
 
-      - name: Strapi build (production) (si script build)
+      - name: Strapi build
         run: npm run build
