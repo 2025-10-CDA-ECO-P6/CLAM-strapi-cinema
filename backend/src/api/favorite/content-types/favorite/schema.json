@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "favorites",
+  "info": {
+    "singularName": "favorite",
+    "pluralName": "favorites",
+    "displayName": "Favorites"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "movies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::movie.movie",
+      "mappedBy": "favorite"
+    }
+  }
+}

@@ -495,6 +495,34 @@ export interface ApiDirectorDirector extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiFavoriteFavorite extends Struct.CollectionTypeSchema {
+  collectionName: 'favorites';
+  info: {
+    displayName: 'Favorites';
+    pluralName: 'favorites';
+    singularName: 'favorite';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::favorite.favorite'
+    > &
+      Schema.Attribute.Private;
+    movies: Schema.Attribute.Relation<'oneToMany', 'api::movie.movie'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGenreGenre extends Struct.CollectionTypeSchema {
   collectionName: 'genres';
   info: {
@@ -542,6 +570,7 @@ export interface ApiMovieMovie extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::director.director'
     >;
+    favorite: Schema.Attribute.Relation<'manyToOne', 'api::favorite.favorite'>;
     genres: Schema.Attribute.Relation<'manyToMany', 'api::genre.genre'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::movie.movie'> &
@@ -1014,7 +1043,6 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -1028,6 +1056,7 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    favorite: Schema.Attribute.Relation<'oneToOne', 'api::favorite.favorite'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1071,6 +1100,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::actor.actor': ApiActorActor;
       'api::director.director': ApiDirectorDirector;
+      'api::favorite.favorite': ApiFavoriteFavorite;
       'api::genre.genre': ApiGenreGenre;
       'api::movie.movie': ApiMovieMovie;
       'plugin::content-releases.release': PluginContentReleasesRelease;

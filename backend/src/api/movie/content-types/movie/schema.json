@@ -50,6 +50,12 @@
     },
     "poster_path": {
       "type": "string"
+    },
+    "favorite": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::favorite.favorite",
+      "inversedBy": "movies"
     }
   }
 }
