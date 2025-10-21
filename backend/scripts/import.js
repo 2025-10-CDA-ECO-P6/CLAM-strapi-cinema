@@ -50,7 +50,7 @@ async function importTMDbData(strapi) {
     console.log(`\n✅ Imported ${genreMap.size} genres\n`);
 
     // Fetch multiple pages of popular movies
-    const PAGES_TO_FETCH = 5; // Adjust this number (max 500 pages on TMDb)
+    const PAGES_TO_FETCH = 1; // Adjust this number (max 500 pages on TMDb)
     let movies = [];
 
     console.log(`📥 Fetching ${PAGES_TO_FETCH} pages of popular movies...`);
