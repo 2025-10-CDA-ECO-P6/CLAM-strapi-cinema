@@ -9,6 +9,7 @@
     "deploy": "strapi deploy",
     "dev": "strapi develop",
     "develop": "strapi develop",
+    "lint": "eslint .",
     "seed:example": "node ./scripts/seed.js",
     "start": "strapi start",
     "strapi": "strapi",
@@ -40,6 +41,7 @@
     "installId": "a0a2374abf4ec6aed8eb50d1f40a25e0c49a886e1836a53a655ecf89a6125402"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@strapi/strapi": "^5.28.0",
     "eslint": "^9.38.0"
   }
