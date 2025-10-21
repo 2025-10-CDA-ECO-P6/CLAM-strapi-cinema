@@ -9,6 +9,7 @@
     "deploy": "strapi deploy",
     "dev": "strapi develop",
     "develop": "strapi develop",
+    "lint": "eslint . --ext .js,.json --ignore-pattern node_modules/",
     "seed:example": "node ./scripts/seed.js",
     "start": "strapi start",
     "strapi": "strapi",
