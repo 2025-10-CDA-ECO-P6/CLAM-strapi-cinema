@@ -4,8 +4,14 @@ export default [
   js.configs.recommended,
   {
     languageOptions: {
-      ecmaVersion: 2018,
+      ecmaVersion: 2022,
       sourceType: 'module',
+      parserOptions: {
+        allowImportExportEverywhere: true,
+        ecmaFeatures: {
+          globalReturn: true,
+        },
+      },
       globals: {
         strapi: false,
         process: 'readonly',
