@@ -1,0 +1,1594 @@
+/* ===================================
+   RESET & BASE STYLES
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Material Design Colors */
+    --primary-color: #E91E63;
+    --primary-dark: #C2185B;
+    --accent-color: #FF4081;
+    --background-dark: #121212;
+    --background-elevation-1: #1E1E1E;
+    --background-elevation-2: #2C2C2C;
+    --background-footer: #5C0000;
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-disabled: rgba(255, 255, 255, 0.5);
+
+    /* Material Design Shadows */
+    --shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    --shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    --shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+    /* Transitions */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[x-cloak] { display: none !important; }
+
+h1, h2 {
+    margin: 0;
+}
+
+body {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--background-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===================================
+   HEADER
+   =================================== */
+.app-header {
+    background-color: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-2);
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.logo-cine {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.logo-verse {
+    color: var(--text-primary);
+    font-weight: 300;
+    margin-left: 4px;
+}
+
+.main-nav {
+    display: flex;
+    gap: 32px;
+    flex: 1;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    transition: color var(--transition-fast);
+    position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--text-primary);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--background-elevation-2);
+    border-radius: 4px;
+    padding: 8px 16px;
+    min-width: 250px;
+    transition: background-color var(--transition-fast);
+}
+
+.searcher {
+    min-width: 0;
+}
+
+.search-bar:focus-within {
+    background-color: var(--background-elevation-1);
+    box-shadow: var(--shadow-1);
+}
+
+.search-icon {
+    color: var(--text-disabled);
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+.search-bar input {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 14px;
+    flex: 1;
+    outline: none;
+}
+
+.search-bar input::placeholder {
+    color: var(--text-disabled);
+}
+
+.btn-connexion {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-1);
+}
+
+.btn-connexion:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-2);
+    transform: translateY(-1px);
+}
+
+.btn-connexion:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-1);
+}
+
+/* ===================================
+   BREADCRUMB
+   =================================== */
+.breadcrumb {
+    padding: 16px 32px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.breadcrumb a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumb a:hover {
+    color: var(--text-primary);
+}
+
+/* ===================================
+   HERO CAROUSEL (INDEX PAGE) - SWIPER
+   =================================== */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 200px);
+    min-height: 600px;
+    overflow: hidden;
+}
+
+.mySwiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.movie-backdrop {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.movie-content {
+    position: relative;
+    z-index: 2;
+    padding: 80px;
+    max-width: 800px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+}
+
+.movie-title {
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.movie-synopsis {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.genre-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    margin-top: 16px;
+}
+
+.genre-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.movie-meta {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 32px;
+}
+
+.rating,
+.duration {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rating-icon,
+.duration-icon {
+    color: #FFD700;
+    font-size: 24px;
+}
+
+.rating-value,
+.duration-value {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-2);
+    align-self: flex-start;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-3);
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-2);
+}
+
+/* Swiper Navigation Customization */
+.swiper-button-next,
+.swiper-button-prev {
+    width: 56px;
+    height: 56px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    backdrop-filter: blur(5px);
+    transition: all var(--transition-fast);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* Swiper Pagination Customization */
+.swiper-pagination {
+    bottom: 40px !important;
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.3);
+    opacity: 1;
+    transition: all var(--transition-fast);
+}
+
+.swiper-pagination-bullet:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.swiper-pagination-bullet-active {
+    background-color: var(--primary-color);
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+}
+
+/* ===================================
+   MOVIES PAGE
+   =================================== */
+.movies-page {
+    flex: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 32px;
+}
+
+.movies-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+}
+
+/* Sidebar Filters */
+.filters-sidebar {
+    background-color: var(--background-elevation-1);
+    border-radius: 8px;
+    padding: 24px;
+    height: fit-content;
+    box-shadow: var(--shadow-1);
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 32px;
+    color: var(--text-primary);
+}
+
+.sort-section {
+    margin-bottom: 24px;
+}
+
+.sort-label {
+    display: block;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.filter-select {
+    width: 100%;
+    background-color: var(--background-elevation-2);
+    color: var(--text-primary);
+    border: none;
+    padding: 12px 40px 12px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    appearance: none;
+    transition: background-color var(--transition-fast);
+}
+
+.filter-select:hover {
+    background-color: var(--background-dark);
+}
+
+.select-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-secondary);
+}
+
+.filter-group {
+    background-color: var(--background-elevation-2);
+    border-radius: 4px;
+    margin-bottom: 12px;
+    transition: background-color var(--transition-fast);
+}
+
+.filter-group:hover {
+    background-color: var(--background-dark);
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.filter-header .material-icons {
+    font-size: 20px;
+    color: var(--text-secondary);
+}
+
+/* Movies Grid - Layout vertical */
+.movies-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.movie-card {
+    background-color: var(--background-elevation-1);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: row;
+}
+
+.movie-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-4);
+}
+
+.movie-poster {
+    width: 300px;
+    min-width: 300px;
+    height: auto;
+    overflow: hidden;
+}
+
+.movie-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.movie-card-content {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-card-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.movie-card-meta {
+    font-size: 13px;
+    color: var(--text-disabled);
+    margin-bottom: 4px;
+}
+
+.movie-card-genre {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.movie-card-synopsis {
+    margin-bottom: 16px;
+}
+
+.movie-card-synopsis h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.movie-card-synopsis p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.movie-card-credits {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.movie-card-credits strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.btn-card-action {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: center;
+    box-shadow: var(--shadow-1);
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-card-action:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-2);
+    transform: translateY(-1px);
+}
+
+.btn-card-action:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-1);
+}
+
+/* ===================================
+   DETAILS PAGE
+   =================================== */
+.details-page {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 32px;
+}
+
+.details-container {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 48px;
+}
+
+/* Profile Section */
+.profile-section {
+    position: sticky;
+    top: 120px;
+    height: fit-content;
+}
+
+.profile-card {
+    background-color: var(--background-elevation-1);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+}
+
+.profile-image {
+    width: 100%;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Details Content */
+.details-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.person-header {
+    margin-bottom: 16px;
+}
+
+.person-name {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.person-role {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.person-birth {
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+/* Biography Section */
+.biography-section {
+    margin-bottom: 5px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.biography-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    white-space: pre-line;
+}
+
+.btn-read-more {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: none;
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.btn-read-more:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Filmography Section */
+.filmography-section {
+    margin-top: 5px;
+}
+
+.filmography-section .section-title {
+    margin-bottom: 24px;
+}
+
+.moviesSwiper {
+    width: 100%;
+    padding: 16px 0 32px 0;
+}
+
+.filmography-card {
+    background-color: var(--background-elevation-1);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-1);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+}
+
+.filmography-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-3);
+}
+
+.filmography-poster {
+    width: 100%;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+    background-color: var(--background-elevation-2);
+}
+
+.filmography-poster img {
+    width: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.filmography-title {
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-align: center;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Swiper Navigation for Details Page */
+.moviesSwiper .swiper-button-next,
+.moviesSwiper .swiper-button-prev {
+    width: 44px;
+    height: 44px;
+    background-color: rgba(233, 30, 99, 0.9);
+    border-radius: 50%;
+}
+
+.moviesSwiper .swiper-button-next:after,
+.moviesSwiper .swiper-button-prev:after {
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+}
+
+.moviesSwiper .swiper-button-next:hover,
+.moviesSwiper .swiper-button-prev:hover {
+    background-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* Responsive Design for Details Page */
+@media (max-width: 968px) {
+    .details-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .profile-section {
+        position: relative;
+        top: 0;
+    }
+
+    .profile-card {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .person-name {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 640px) {
+    .details-page {
+        padding: 16px;
+    }
+
+    .person-name {
+        font-size: 28px;
+    }
+
+    .filmography-title {
+        font-size: 12px;
+        min-height: 50px;
+    }
+}
+
+/* ===================================
+   ACTORS PAGE
+   =================================== */
+
+/* Actors Grid */
+.actors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 32px;
+}
+
+.actor-card {
+    background-color: var(--background-elevation-1);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+    transition: all var(--transition-normal);
+}
+
+.actor-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-4);
+}
+
+.actor-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.actor-image {
+    width: 100%;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+    background-color: var(--background-elevation-2);
+}
+
+.actor-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.actor-card-content {
+    padding: 20px;
+}
+
+.actor-card-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.actor-card-role {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.actor-card-bio {
+    margin-bottom: 12px;
+}
+
+.actor-bio-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.actor-card-info {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.actor-card-info strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.actor-card-movies {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding-top: 12px;
+    border-top: 1px solid var(--background-elevation-2);
+}
+
+.actor-card-movies strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Filter info */
+.filter-info {
+    margin-top: 24px;
+    padding: 16px;
+    background-color: var(--background-elevation-2);
+    border-radius: 4px;
+    text-align: center;
+}
+
+.filter-info .filter-label {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Loading and empty states */
+.loading-state,
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 64px 32px;
+    color: var(--text-secondary);
+    font-size: 18px;
+}
+
+/* Responsive Design for Actors Page */
+@media (max-width: 968px) {
+    .actors-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 24px;
+    }
+}
+
+@media (max-width: 640px) {
+    .actors-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .actor-card {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .actor-image {
+        width: 120px;
+        min-width: 120px;
+        aspect-ratio: 2/3;
+    }
+
+    .actor-card-content {
+        padding: 16px;
+    }
+
+    .actor-card-title {
+        font-size: 18px;
+    }
+}
+
+/* ===================================
+   DIRECTORS PAGE
+   =================================== */
+
+/* Directors Grid for List Page */
+.directors-grid-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 32px;
+}
+
+.director-card-page {
+    background-color: var(--background-elevation-1);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+    transition: all var(--transition-normal);
+}
+
+.director-card-page:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-4);
+}
+
+.director-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.director-image-page {
+    width: 100%;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+    background-color: var(--background-elevation-2);
+}
+
+.director-image-page img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.director-card-content {
+    padding: 20px;
+}
+
+.director-card-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.director-card-role {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.director-card-bio {
+    margin-bottom: 12px;
+}
+
+.director-bio-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.director-card-info {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.director-card-info strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.director-card-movies {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding-top: 12px;
+    border-top: 1px solid var(--background-elevation-2);
+}
+
+.director-card-movies strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Responsive Design for Directors Page */
+@media (max-width: 968px) {
+    .directors-grid-page {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 24px;
+    }
+}
+
+@media (max-width: 640px) {
+    .directors-grid-page {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .director-card-page {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .director-image-page {
+        width: 120px;
+        min-width: 120px;
+        aspect-ratio: 2/3;
+    }
+
+    .director-card-content {
+        padding: 16px;
+    }
+
+    .director-card-title {
+        font-size: 18px;
+    }
+}
+
+/* ===================================
+   MOVIE DETAILS PAGE - SPECIFIC STYLES
+   =================================== */
+
+/* Movie Stats */
+.movie-stats {
+    display: flex;
+    gap: 32px;
+    margin: 16px 0 24px 0;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-icon {
+    color: var(--primary-color);
+    font-size: 32px;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Movie Genres Section */
+.movie-genres-section {
+    margin: 24px 0;
+}
+
+.genres-subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.genres-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.genre-tag {
+    background-color: rgba(233, 30, 99, 0.2);
+    color: var(--primary-color);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid var(--primary-color);
+}
+
+/* Movie Actions */
+.movie-actions {
+    display: flex;
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--text-primary);
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Swiper Navigation for Actors on Movie Page */
+.actorsSwiper,
+.directorsSwiper {
+    max-width: 700px;
+    padding: 16px 0 32px 0;
+}
+
+.actorsSwiper .swiper-button-next,
+.actorsSwiper .swiper-button-prev {
+    width: 44px;
+    height: 44px;
+    background-color: rgba(233, 30, 99, 0.9);
+    border-radius: 50%;
+}
+
+.actorsSwiper .swiper-button-next:after,
+.actorsSwiper .swiper-button-prev:after {
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+}
+
+.actorsSwiper .swiper-button-next:hover,
+.actorsSwiper .swiper-button-prev:hover {
+    background-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* Swiper Navigation for Directors on Movie Page */
+.directorsSwiper .swiper-button-next,
+.directorsSwiper .swiper-button-prev {
+    width: 44px;
+    height: 44px;
+    background-color: rgba(233, 30, 99, 0.9);
+    border-radius: 50%;
+}
+
+.directorsSwiper .swiper-button-next:after,
+.directorsSwiper .swiper-button-prev:after {
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+}
+
+.directorsSwiper .swiper-button-next:hover,
+.directorsSwiper .swiper-button-prev:hover {
+    background-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* Responsive Design for Movie Actions */
+@media (max-width: 640px) {
+    .movie-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .movie-stats {
+        gap: 24px;
+    }
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
+.app-footer {
+    background-color: var(--background-footer);
+    margin-top: auto;
+    padding: 32px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+    color: var(--text-primary);
+}
+
+.footer-social {
+    align-items: flex-start;
+}
+
+.social-title {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 16px;
+}
+
+.social-icon {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.social-icon:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.social-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+@media (max-width: 1200px) {
+    .movies-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 968px) {
+    .header-content {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .main-nav {
+        order: 3;
+        width: 100%;
+    }
+
+    .movies-container {
+        grid-template-columns: 1fr;
+    }
+
+    .filters-sidebar {
+        position: sticky;
+        top: 100px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .movie-content {
+        padding: 40px;
+    }
+
+    .movie-title {
+        font-size: 48px;
+    }
+}
+
+@media (max-width: 640px) {
+    .header-content {
+        padding: 16px;
+    }
+
+    .search-bar {
+        min-width: 200px;
+    }
+
+    .movie-content {
+        padding: 24px;
+    }
+
+    .movie-title {
+        font-size: 36px;
+    }
+
+    .carousel-control {
+        width: 40px;
+        height: 40px;
+    }
+
+    .carousel-control .material-icons {
+        font-size: 24px;
+    }
+
+    .movies-grid {
+        gap: 16px;
+    }
+}
+
+/* ===================================
+   MATERIALIZE CSS OVERRIDES
+   =================================== */
+
+/* Force nos couleurs personnalisées sur les éléments Materialize */
+nav, .nav-wrapper {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Corriger le fil d'ariane */
+.breadcrumb,
+.breadcrumb:before,
+.breadcrumb:last-child {
+    background-color: transparent !important;
+    color: var(--text-secondary) !important;
+    font-size: 14px !important;
+    padding: 16px 32px !important;
+    margin: 0 !important;
+    display: inline !important;
+}
+
+/* Cacher le > automatique de Materialize qui apparaît avant chaque breadcrumb */
+.breadcrumb:before {
+    content: '' !important;
+    display: none !important;
+}
+
+/* Cacher le > après le dernier breadcrumb */
+.breadcrumb:last-child:after {
+    content: '' !important;
+    display: none !important;
+}
+
+/* Corriger les liens du header */
+.app-header a,
+.main-nav a {
+    background-color: transparent !important;
+}
+
+/* Corriger les boutons pour qu'ils gardent nos styles */
+.btn-connexion,
+.btn-primary,
+.btn-card-action {
+    background-color: var(--primary-color) !important;
+    border: none !important;
+    line-height: normal !important;
+    height: auto !important;
+}
+
+.btn-connexion:hover,
+.btn-connexion:focus,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-card-action:hover,
+.btn-card-action:focus {
+    background-color: var(--primary-dark) !important;
+}
+
+/* Corriger le champ de recherche */
+.search-bar input {
+    background-color: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+.search-bar input:focus {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Corriger les select */
+.filter-select,
+select {
+    background-color: var(--background-elevation-2) !important;
+    border: none !important;
+    height: auto !important;
+    display: block !important;
+    opacity: 1 !important;
+    position: relative !important;
+    pointer-events: auto !important;
+}
+
+/* Désactiver le wrapper Materialize sur nos selects personnalisés */
+.select-wrapper.initialized {
+    position: relative !important;
+}
+
+/* Forcer l'affichage du select natif */
+.select-wrapper input.select-dropdown {
+    display: none !important;
+}
+
+/* Cacher la flèche par défaut de Materialize et garder la nôtre */
+.select-wrapper .caret {
+    display: none !important;
+}
+
+/* S'assurer que notre icône personnalisée est visible */
+.select-icon {
+    position: absolute !important;
+    right: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+    color: var(--text-secondary) !important;
+    z-index: 1 !important;
+}
+
+/* S'assurer que le header n'a pas de fond Materialize */
+header,
+.app-header {
+    background-color: rgba(18, 18, 18, 0.95) !important;
+}
+
+/* Corriger les icônes Material */
+.material-icons {
+    vertical-align: middle !important;
+}
+
+/* Garder notre police Roboto */
+body,
+button,
+input,
+select,
+textarea {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* Corriger le body pour éviter le scroll horizontal de Materialize */
+body {
+    overflow-x: hidden !important;
+}
+
+/* Style pour le select de genre */
+.filter-group-select {
+    margin-bottom: 24px;
+}
+
+.filter-group-select .filter-label {
+    display: block;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+
+/* ===================================
+   SEARCH RESULTS PAGE
+   =================================== */
+.search-results-page {
+    min-height: calc(100vh - 200px);
+}
+
+.search-result-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.search-result-card img {
+    transition: transform 0.3s ease;
+}
+
+.search-result-card:hover img {
+    transform: scale(1.05);
+}

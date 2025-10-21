@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cineverse - Films</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body x-data="moviesPage">
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-cine">Cine</span><span class="logo-verse">verse</span>
+            </a>
+
+            <nav class="main-nav">
+                <a href="movies.html" class="nav-link active">Films</a>
+                <a href="actors.html" class="nav-link">Acteurs</a>
+                <a href="directors.html" class="nav-link">Réalisateurs</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-bar search-all">
+                    <span class="material-icons search-icon">search</span>
+                    <input type="text" placeholder="Je recherche ...">
+                </div>
+                <button class="btn-connexion waves-effect waves-light">Connexion</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Home</a> > <a href="#">Films</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="movies-page">
+        <div class="movies-container">
+            <!-- Sidebar Filters -->
+            <aside class="filters-sidebar">
+                <h1 class="page-title">Je cherche ...</h1>
+
+                <div class="search-bar searcher" style="margin-bottom: 20px;">
+                    <span class="material-icons search-icon">search</span>
+                    <input type="text" placeholder="Un film ..." x-model="searchQuery" @input="searchMovies()">
+                </div>
+
+                <div class="filter-group-select">
+                    <div class="select-wrapper">
+                        <select class="filter-select" x-model="selectedGenre" @change="filterByGenre()">
+                            <option value="">Par genre</option>
+                            <template x-for="genre in genres" :key="genre.documentId">
+                                <option x-bind:value="genre.name" x-text="genre.name"></option>
+                            </template>
+                        </select>
+                        <span class="material-icons select-icon">expand_more</span>
+                    </div>
+                </div>
+
+                <div class="sort-section">
+                    <span class="sort-label">Trier Par</span>
+                    <div class="select-wrapper">
+                        <select class="filter-select" x-model="sortBy" @change="sortMovies()">
+                            <option value="popularity">Popularité</option>
+                            <option value="release_date">Date de sortie</option>
+                            <option value="rating">Note</option>
+                            <option value="title">Titre</option>
+                        </select>
+                        <span class="material-icons select-icon">expand_more</span>
+                    </div>
+                </div>
+
+                <!-- Filter info -->
+                <div class="filter-info" style="margin-top: 24px; padding: 16px; background-color: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">
+                        <span x-show="movies.length > 0">
+                            <strong x-text="movies.length"></strong> film(s) trouvé(s)
+                        </span>
+                        <span x-show="movies.length === 0 && !isLoading">
+                            Aucun film trouvé
+                        </span>
+                    </p>
+                </div>
+            </aside>
+
+            <!-- Movies Grid -->
+            <section class="movies-grid">
+                <!-- Loading State -->
+                <div x-show="isLoading" class="loading-state" style="grid-column: 1/-1; text-align: center; padding: 48px;">
+                    <p>Chargement des films...</p>
+                </div>
+
+                <!-- Movie Cards -->
+                <template x-for="movie in movies" :key="movie.documentId">
+                    <article class="movie-card">
+                        <div class="movie-poster">
+                            <img x-bind:src="movie.poster_path || 'https://via.placeholder.com/300x450?text=' + encodeURIComponent(movie.title)"
+                                 x-bind:alt="movie.title"
+                                 loading="lazy">
+                        </div>
+                        <div class="movie-card-content">
+                            <h2 class="movie-card-title" x-text="movie.title.toUpperCase()"></h2>
+                            <p class="movie-card-meta">
+                                <span x-text="formatDate(movie.release_date)"></span>
+                                <span x-show="movie.runtime" x-text="' | ' + formatRuntime(movie.runtime)"></span>
+                            </p>
+                            <p class="movie-card-genre" x-text="getGenreNames(movie.genres)"></p>
+
+                            <div class="movie-card-synopsis">
+                                <h3>Synopsis</h3>
+                                <p x-text="movie.overview"></p>
+                            </div>
+
+                            <p class="movie-card-credits">
+                                <strong>Réalisateur:</strong> <span x-text="getDirectorNames(movie.directors)"></span><br>
+                                <strong>Acteurs:</strong> <span x-text="getActorNames(movie.actors)"></span>
+                            </p>
+
+                            <a x-bind:href="'movie-details.html?id=' + movie.documentId"
+                               class="btn-card-action waves-effect waves-light">
+                                Accéder à la fiche du film
+                            </a>
+                        </div>
+                    </article>
+                </template>
+
+                <!-- Empty State -->
+                <div x-show="!isLoading && movies.length === 0" class="empty-state" style="grid-column: 1/-1; text-align: center; padding: 48px;">
+                    <p>Aucun film trouvé.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <a href="#" class="footer-link">Aide</a>
+                <a href="#" class="footer-link">Index du site</a>
+                <a href="#" class="footer-link">Emplois</a>
+            </div>
+
+            <div class="footer-column">
+                <a href="#" class="footer-link">Politique de confidentialité</a>
+                <a href="#" class="footer-link">Conditions d'utilisation</a>
+                <a href="#" class="footer-link">Salle de Presse</a>
+            </div>
+
+            <div class="footer-column footer-social">
+                <p class="social-title">Suivez Cineverse sur les réseaux sociaux</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" aria-label="TikTok">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <span class="material-icons">photo_camera</span>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="YouTube">
+                        <span class="material-icons">play_circle_filled</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/script.js"></script>
+    <script type="module" src="js/movies.js"></script>
+</body>
+</html>

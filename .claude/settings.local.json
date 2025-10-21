@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(done)",
+      "Bash(tree:*)",
+      "Bash(npm start)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,887 @@
+    /* ===================================
+       RESET & BASE STYLES
+       =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Material Design Colors */
+    --primary-color: #8B001F;
+    --primary-dark: #4D000E;
+    --accent-color: #D32F4F;
+    --background-dark: #121212;
+    --background-elevation-1: #1E1E1E;
+    --background-elevation-2: #2C2C2C;
+    --background-footer: #5C0000;
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-disabled: rgba(255, 255, 255, 0.5);
+
+    /* Material Design Shadows */
+    --shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    --shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    --shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+    /* Transitions */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--background-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===================================
+   HEADER
+   =================================== */
+.app-header {
+    background-color: #5C0000;
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-2);
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.logo-cine {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.logo-verse {
+    color: var(--text-primary);
+    font-weight: 300;
+    margin-left: 4px;
+}
+
+.main-nav {
+    display: flex;
+    gap: 32px;
+    flex: 1;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    transition: color var(--transition-fast);
+    position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--text-primary);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--background-elevation-2);
+    border-radius: 4px;
+    padding: 8px 16px;
+    min-width: 250px;
+    transition: background-color var(--transition-fast);
+}
+
+.search-bar:focus-within {
+    background-color: var(--background-elevation-1);
+    box-shadow: var(--shadow-1);
+}
+
+.search-icon {
+    color: var(--text-disabled);
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+.search-bar input {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 14px;
+    flex: 1;
+    outline: none;
+}
+
+.search-bar input::placeholder {
+    color: var(--text-disabled);
+}
+
+.btn-connexion {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-1);
+}
+
+.btn-connexion:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-2);
+    transform: translateY(-1px);
+}
+
+.btn-connexion:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-1);
+}
+
+/* ===================================
+   BREADCRUMB
+   =================================== */
+.breadcrumb {
+    padding: 16px 32px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.breadcrumb a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumb a:hover {
+    color: var(--text-primary);
+}
+
+/* ===================================
+   HERO CAROUSEL (INDEX PAGE) - SWIPER
+   =================================== */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 200px);
+    min-height: 600px;
+    overflow: hidden;
+}
+
+.mySwiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.movie-backdrop {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.movie-content {
+    position: relative;
+    z-index: 2;
+    padding: 80px;
+    max-width: 800px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+}
+
+.movie-title {
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.movie-synopsis {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.genre-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    margin-top: 16px;
+}
+
+.genre-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.movie-meta {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 32px;
+}
+
+.rating,
+.duration {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rating-icon,
+.duration-icon {
+    color: #FFD700;
+    font-size: 24px;
+}
+
+.rating-value,
+.duration-value {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-2);
+    align-self: flex-start;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-3);
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-2);
+}
+
+/* Swiper Navigation Customization */
+.swiper-button-next,
+.swiper-button-prev {
+    width: 56px;
+    height: 56px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    backdrop-filter: blur(5px);
+    transition: all var(--transition-fast);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* Swiper Pagination Customization */
+.swiper-pagination {
+    bottom: 40px !important;
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.3);
+    opacity: 1;
+    transition: all var(--transition-fast);
+}
+
+.swiper-pagination-bullet:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.swiper-pagination-bullet-active {
+    background-color: var(--primary-color);
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+}
+
+/* ===================================
+   MOVIES PAGE
+   =================================== */
+.movies-page {
+    flex: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 32px;
+}
+
+.movies-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+}
+
+/* Sidebar Filters */
+.filters-sidebar {
+    background-color: var(--background-elevation-1);
+    border-radius: 8px;
+    padding: 24px;
+    height: fit-content;
+    box-shadow: var(--shadow-1);
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 32px;
+    color: var(--text-primary);
+}
+
+.sort-section {
+    margin-bottom: 24px;
+}
+
+.sort-label {
+    display: block;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.filter-select {
+    width: 100%;
+    background-color: var(--background-elevation-2);
+    color: var(--text-primary);
+    border: none;
+    padding: 12px 40px 12px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    appearance: none;
+    transition: background-color var(--transition-fast);
+}
+
+.filter-select:hover {
+    background-color: var(--background-dark);
+}
+
+.select-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-secondary);
+}
+
+.filter-group {
+    background-color: var(--background-elevation-2);
+    border-radius: 4px;
+    margin-bottom: 12px;
+    transition: background-color var(--transition-fast);
+}
+
+.filter-group:hover {
+    background-color: var(--background-dark);
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.filter-header .material-icons {
+    font-size: 20px;
+    color: var(--text-secondary);
+}
+
+/* Movies Grid - Layout vertical */
+.movies-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.movie-card {
+    background-color: var(--background-elevation-1);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: row;
+}
+
+.movie-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-4);
+}
+
+.movie-poster {
+    width: 300px;
+    min-width: 300px;
+    height: auto;
+    overflow: hidden;
+}
+
+.movie-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.movie-card-content {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-card-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.movie-card-meta {
+    font-size: 13px;
+    color: var(--text-disabled);
+    margin-bottom: 4px;
+}
+
+.movie-card-genre {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.movie-card-synopsis {
+    margin-bottom: 16px;
+}
+
+.movie-card-synopsis h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.movie-card-synopsis p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.movie-card-credits {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.movie-card-credits strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.btn-card-action {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: center;
+    box-shadow: var(--shadow-1);
+}
+
+.btn-card-action:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-2);
+    transform: translateY(-1px);
+}
+
+.btn-card-action:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-1);
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
+.app-footer {
+    background-color: var(--background-footer);
+    margin-top: auto;
+    padding: 32px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+    color: var(--text-primary);
+}
+
+.footer-social {
+    align-items: flex-start;
+}
+
+.social-title {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 16px;
+}
+
+.social-icon {
+    color: var(--text-primary);
+    background-color: #D32F4F;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.social-icon:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.social-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+@media (max-width: 1200px) {
+    .movies-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 968px) {
+    .header-content {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .main-nav {
+        order: 3;
+        width: 100%;
+    }
+
+    .movies-container {
+        grid-template-columns: 1fr;
+    }
+
+    .filters-sidebar {
+        position: sticky;
+        top: 100px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .movie-content {
+        padding: 40px;
+    }
+
+    .movie-title {
+        font-size: 48px;
+    }
+}
+
+@media (max-width: 640px) {
+    .header-content {
+        padding: 16px;
+    }
+
+    .search-bar {
+        min-width: 200px;
+    }
+
+    .movie-content {
+        padding: 24px;
+    }
+
+    .movie-title {
+        font-size: 36px;
+    }
+
+    .carousel-control {
+        width: 40px;
+        height: 40px;
+    }
+
+    .carousel-control .material-icons {
+        font-size: 24px;
+    }
+
+    .movies-grid {
+        gap: 16px;
+    }
+}
+
+/* ===================================
+   MATERIALIZE CSS OVERRIDES
+   =================================== */
+
+/* Force nos couleurs personnalisées sur les éléments Materialize */
+nav, .nav-wrapper {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Corriger le fil d'ariane */
+.breadcrumb,
+.breadcrumb:before,
+.breadcrumb:last-child {
+    background-color: transparent !important;
+    color: var(--text-secondary) !important;
+    font-size: 14px !important;
+    padding: 16px 32px !important;
+    margin: 0 !important;
+    display: inline !important;
+}
+
+/* Cacher le > automatique de Materialize qui apparaît avant chaque breadcrumb */
+.breadcrumb:before {
+    content: '' !important;
+    display: none !important;
+}
+
+/* Cacher le > après le dernier breadcrumb */
+.breadcrumb:last-child:after {
+    content: '' !important;
+    display: none !important;
+}
+
+/* Corriger les liens du header */
+.app-header a,
+.main-nav a {
+    background-color: transparent !important;
+}
+
+/* Corriger les boutons pour qu'ils gardent nos styles */
+.btn-connexion,
+.btn-primary,
+.btn-card-action {
+    background-color: var(--primary-color) !important;
+    border: none !important;
+    line-height: normal !important;
+    height: auto !important;
+}
+
+.btn-connexion:hover,
+.btn-connexion:focus,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-card-action:hover,
+.btn-card-action:focus {
+    background-color: var(--primary-dark) !important;
+}
+
+/* Corriger le champ de recherche */
+.search-bar input {
+    background-color: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+.search-bar input:focus {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Corriger les select */
+.filter-select,
+select {
+    background-color: var(--background-elevation-2) !important;
+    border: none !important;
+    height: auto !important;
+    display: block !important;
+    opacity: 1 !important;
+    position: relative !important;
+    pointer-events: auto !important;
+}
+
+/* Désactiver le wrapper Materialize sur nos selects personnalisés */
+.select-wrapper.initialized {
+    position: relative !important;
+}
+
+/* Forcer l'affichage du select natif */
+.select-wrapper input.select-dropdown {
+    display: none !important;
+}
+
+/* Cacher la flèche par défaut de Materialize et garder la nôtre */
+.select-wrapper .caret {
+    display: none !important;
+}
+
+/* S'assurer que notre icône personnalisée est visible */
+.select-icon {
+    position: absolute !important;
+    right: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+    color: var(--text-secondary) !important;
+    z-index: 1 !important;
+}
+
+/* S'assurer que le header n'a pas de fond Materialize */
+header,
+.app-header {
+    background-color: rgba(18, 18, 18, 0.95) !important;
+}
+
+/* Corriger les icônes Material */
+.material-icons {
+    vertical-align: middle !important;
+}
+
+/* Garder notre police Roboto */
+body,
+button,
+input,
+select,
+textarea {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* Corriger le body pour éviter le scroll horizontal de Materialize */
+body {
+    overflow-x: hidden !important;
+}
+
+/* Style pour le select de genre */
+.filter-group-select {
+    margin-bottom: 24px;
+}
+
+.filter-group-select .filter-label {
+    display: block;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
