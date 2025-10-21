@@ -73,6 +73,7 @@ jobs:
         with:
           node-version: '20.x'
           cache: "npm"
+          cache-dependency-path: './backend/package-lock.json'
 
       - name: Install back dependencies
         run: npm ci
