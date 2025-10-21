@@ -100,7 +100,7 @@ document.addEventListener('alpine:init', () => {
                 );
             }
             this.sortActors();
-        }
+        },
     }));
 });
 

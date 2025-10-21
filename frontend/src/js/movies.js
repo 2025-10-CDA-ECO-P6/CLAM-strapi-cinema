@@ -164,7 +164,7 @@ Alpine.data('moviesPage', () => ({
     getActorNames(actors) {
         if (!actors || actors.length === 0) return 'Acteurs inconnus';
         return actors.slice(0, 3).map(a => a.name).join(', ') + (actors.length > 3 ? ' ...' : '');
-    }
+    },
 }));
 
 Alpine.start();

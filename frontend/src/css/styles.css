@@ -134,6 +134,10 @@ body {
     transition: background-color var(--transition-fast);
 }
 
+.searcher {
+    min-width: 0;
+}
+
 .search-bar:focus-within {
     background-color: var(--background-elevation-1);
     box-shadow: var(--shadow-1);

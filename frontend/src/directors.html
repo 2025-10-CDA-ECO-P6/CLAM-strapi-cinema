@@ -24,9 +24,9 @@
             </nav>
 
             <div class="header-actions">
-                <div class="search-bar">
+                <div class="search-bar search-all">
                     <span class="material-icons search-icon">search</span>
-                    <input type="text" placeholder="Je recherche ..." x-model="searchQuery" @input="filterDirectors">
+                    <input type="text" placeholder="Je recherche ...">
                 </div>
                 <button class="btn-connexion waves-effect waves-light">Connexion</button>
             </div>
@@ -44,6 +44,11 @@
             <!-- Sidebar Filters -->
             <aside class="filters-sidebar">
                 <h1 class="page-title">Je cherche ...</h1>
+
+                <div class="search-bar searcher" style="margin-bottom: 20px;">
+                    <span class="material-icons search-icon">search</span>
+                    <input type="text" placeholder="Un réalisateur ..." x-model="searchQuery" @input="filterDirectors">
+                </div>
 
                 <div class="sort-section">
                     <span class="sort-label">Trier Par</span>
@@ -151,6 +156,7 @@
     <!-- Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Alpine.js -->
+    <script src="js/script.js"></script>
     <script type="module" src="js/directors.js"></script>
 </body>
 </html>

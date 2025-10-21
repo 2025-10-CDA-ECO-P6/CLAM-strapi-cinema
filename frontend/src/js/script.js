@@ -3,7 +3,7 @@
 // ===================================
 document.addEventListener('DOMContentLoaded', function() {
     // Get all search inputs in headers
-    const searchInputs = document.querySelectorAll('.search-bar input');
+    const searchInputs = document.querySelectorAll('.search-all input');
 
     searchInputs.forEach(input => {
         // Handle Enter key press
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (event.key === 'Enter') {
                 const query = this.value.trim();
                 if (query) {
-                    window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+                    window.location.href = `/search-results.html?q=${encodeURIComponent(query)}`;
                 }
             }
         });

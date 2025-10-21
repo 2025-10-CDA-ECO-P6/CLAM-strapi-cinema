@@ -7,24 +7,10 @@ document.addEventListener('alpine:init', () => {
         items: [],
         loading: false,
         error: null,
-        searchQuery: '',
 
         // Initialisation
         async init() {
             await this.loadItems();
-        },
-
-        // Search functionality - redirect to movies page
-        searchMovies() {
-            if (this.searchQuery.trim()) {
-                window.location.href = `movies.html?search=${encodeURIComponent(this.searchQuery)}`;
-            }
-        },
-
-        handleSearchKeypress(event) {
-            if (event.key === 'Enter') {
-                this.searchMovies();
-            }
         },
         
         // Charger les items

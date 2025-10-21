@@ -24,9 +24,9 @@
             </nav>
 
             <div class="header-actions">
-                <div class="search-bar">
+                <div class="search-bar search-all">
                     <span class="material-icons search-icon">search</span>
-                    <input type="text" placeholder="Je recherche ..." x-model="searchQuery" @input="searchMovies()">
+                    <input type="text" placeholder="Je recherche ...">
                 </div>
                 <button class="btn-connexion waves-effect waves-light">Connexion</button>
             </div>
@@ -44,6 +44,11 @@
             <!-- Sidebar Filters -->
             <aside class="filters-sidebar">
                 <h1 class="page-title">Je cherche ...</h1>
+
+                <div class="search-bar searcher" style="margin-bottom: 20px;">
+                    <span class="material-icons search-icon">search</span>
+                    <input type="text" placeholder="Un film ..." x-model="searchQuery" @input="searchMovies()">
+                </div>
 
                 <div class="filter-group-select">
                     <div class="select-wrapper">

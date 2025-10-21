@@ -111,7 +111,7 @@ document.addEventListener('alpine:init', () => {
 
         goToMovie(movieId) {
             window.location.href = `/movie-details.html?id=${movieId}`;
-        }
+        },
     }));
 });
 Alpine.start();
