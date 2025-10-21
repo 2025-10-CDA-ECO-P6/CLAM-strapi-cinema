@@ -31,7 +31,7 @@ export default [
     },
     rules: {
       'indent': ['error', 2],
-      'linebreak-style': ['error', 'unix'],
+      'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
       'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
       'semi': ['error', 'always'],
       'no-debugger': 'error',
