@@ -34,7 +34,6 @@ export default [
       'linebreak-style': ['error', 'unix'],
       'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
       'semi': ['error', 'always'],
-      'no-console': 'warn',
       'no-debugger': 'error',
     },
   },
