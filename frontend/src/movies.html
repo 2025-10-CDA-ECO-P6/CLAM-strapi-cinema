@@ -7,26 +7,26 @@
     <!-- Materialize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body x-data="moviesPage">
     <!-- Header -->
     <header class="app-header">
         <div class="header-content">
-            <div class="logo">
+            <a href="index.html" class="logo">
                 <span class="logo-cine">Cine</span><span class="logo-verse">verse</span>
-            </div>
+            </a>
 
             <nav class="main-nav">
-                <a href="#" class="nav-link active">Films</a>
-                <a href="#" class="nav-link">Acteurs</a>
-                <a href="#" class="nav-link">Réalisateurs</a>
+                <a href="movies.html" class="nav-link active">Films</a>
+                <a href="actors.html" class="nav-link">Acteurs</a>
+                <a href="directors.html" class="nav-link">Réalisateurs</a>
             </nav>
 
             <div class="header-actions">
                 <div class="search-bar">
                     <span class="material-icons search-icon">search</span>
-                    <input type="text" placeholder="Je recherche ...">
+                    <input type="text" placeholder="Je recherche ..." x-model="searchQuery" @input="searchMovies()">
                 </div>
                 <button class="btn-connexion waves-effect waves-light">Connexion</button>
             </div>
@@ -45,135 +45,89 @@
             <aside class="filters-sidebar">
                 <h1 class="page-title">Je cherche ...</h1>
 
+                <div class="filter-group-select">
+                    <div class="select-wrapper">
+                        <select class="filter-select" x-model="selectedGenre" @change="filterByGenre()">
+                            <option value="">Par genre</option>
+                            <template x-for="genre in genres" :key="genre.documentId">
+                                <option x-bind:value="genre.name" x-text="genre.name"></option>
+                            </template>
+                        </select>
+                        <span class="material-icons select-icon">expand_more</span>
+                    </div>
+                </div>
+
                 <div class="sort-section">
                     <span class="sort-label">Trier Par</span>
                     <div class="select-wrapper">
-                        <select class="filter-select">
-                            <option>Popularité</option>
-                            <option>Date de sortie</option>
-                            <option>Note</option>
-                            <option>Titre</option>
+                        <select class="filter-select" x-model="sortBy" @change="sortMovies()">
+                            <option value="popularity">Popularité</option>
+                            <option value="release_date">Date de sortie</option>
+                            <option value="rating">Note</option>
+                            <option value="title">Titre</option>
                         </select>
                         <span class="material-icons select-icon">expand_more</span>
                     </div>
                 </div>
 
-                <div class="filter-group-select">
-                    <div class="select-wrapper">
-                        <select class="filter-select">
-                            <option value="">Par genre</option>
-                            <option value="action">Action</option>
-                            <option value="aventure">Aventure</option>
-                            <option value="animation">Animation</option>
-                            <option value="biographie">Biographie</option>
-                            <option value="comedie">Comédie</option>
-                            <option value="crime">Crime</option>
-                            <option value="documentaire">Documentaire</option>
-                            <option value="drame">Drame</option>
-                            <option value="familial">Familial</option>
-                            <option value="fantastique">Fantastique</option>
-                            <option value="guerre">Guerre</option>
-                            <option value="histoire">Histoire</option>
-                            <option value="horreur">Horreur</option>
-                            <option value="musical">Musical</option>
-                            <option value="mystere">Mystère</option>
-                            <option value="romance">Romance</option>
-                            <option value="science-fiction">Science-Fiction</option>
-                            <option value="thriller">Thriller</option>
-                            <option value="western">Western</option>
-                        </select>
-                        <span class="material-icons select-icon">expand_more</span>
-                    </div>
-                </div>
-
-                <div class="filter-group-select">
-                    <div class="select-wrapper">
-                        <select class="filter-select">
-                            <option value="">Populaire</option>
-                        </select>
-                        <span class="material-icons select-icon">expand_more</span>
-                    </div>
-                </div>
-
-                <div class="filter-group-select">
-                    <div class="select-wrapper">
-                        <select class="filter-select">
-                            <option value="">A l'affiche</option>
-                        </select>
-                        <span class="material-icons select-icon">expand_more</span>
-                    </div>
-                </div>
-
-                <div class="filter-group-select">
-                    <div class="select-wrapper">
-                        <select class="filter-select">
-                            <option value="">A venir</option>
-                        </select>
-                        <span class="material-icons select-icon">expand_more</span>
-                    </div>
-                </div>
-
-                <div class="filter-group-select">
-                    <div class="select-wrapper">
-                        <select class="filter-select">
-                            <option value="">Les mieux notés</option>
-                        </select>
-                        <span class="material-icons select-icon">expand_more</span>
-                    </div>
+                <!-- Filter info -->
+                <div class="filter-info" style="margin-top: 24px; padding: 16px; background-color: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">
+                        <span x-show="movies.length > 0">
+                            <strong x-text="movies.length"></strong> film(s) trouvé(s)
+                        </span>
+                        <span x-show="movies.length === 0 && !isLoading">
+                            Aucun film trouvé
+                        </span>
+                    </p>
                 </div>
             </aside>
 
             <!-- Movies Grid -->
             <section class="movies-grid">
-                <!-- Movie Card 1 - Avatar -->
-                <article class="movie-card">
-                    <div class="movie-poster">
-                        <img src="https://image.tmdb.org/t/p/original/o0s4XsEDfDlvit5pDRKjzXR4pp2.jpg" alt="Avatar">
-                    </div>
-                    <div class="movie-card-content">
-                        <h2 class="movie-card-title">AVATAR</h2>
-                        <p class="movie-card-meta">18/12/2009 | PG | 2h 46min</p>
-                        <p class="movie-card-genre">Action, Fantastique, Science-Fiction</p>
+                <!-- Loading State -->
+                <div x-show="isLoading" class="loading-state" style="grid-column: 1/-1; text-align: center; padding: 48px;">
+                    <p>Chargement des films...</p>
+                </div>
 
-                        <div class="movie-card-synopsis">
-                            <h3>Synopsis</h3>
-                            <p>Un marine paraplégique, envoyé sur la lune Pandora pour une mission unique, est tiraillé entre suivre ses ordres et protéger le monde qu'il considère dorénavant comme le sien.</p>
+                <!-- Movie Cards -->
+                <template x-for="movie in movies" :key="movie.documentId">
+                    <article class="movie-card">
+                        <div class="movie-poster">
+                            <img x-bind:src="movie.poster_path || 'https://via.placeholder.com/300x450?text=' + encodeURIComponent(movie.title)"
+                                 x-bind:alt="movie.title"
+                                 loading="lazy">
                         </div>
+                        <div class="movie-card-content">
+                            <h2 class="movie-card-title" x-text="movie.title.toUpperCase()"></h2>
+                            <p class="movie-card-meta">
+                                <span x-text="formatDate(movie.release_date)"></span>
+                                <span x-show="movie.runtime" x-text="' | ' + formatRuntime(movie.runtime)"></span>
+                            </p>
+                            <p class="movie-card-genre" x-text="getGenreNames(movie.genres)"></p>
 
-                        <p class="movie-card-credits">
-                            <strong>Réalisateur:</strong> James Cameron<br>
-                            <strong>Acteurs:</strong> Sam Worthington, Zoë Saldana, Sigourney Weaver
-                        </p>
+                            <div class="movie-card-synopsis">
+                                <h3>Synopsis</h3>
+                                <p x-text="movie.overview"></p>
+                            </div>
 
-                        <button class="btn-card-action waves-effect waves-light">Accéder à la fiche du film</button>
-                    </div>
-                </article>
+                            <p class="movie-card-credits">
+                                <strong>Réalisateur:</strong> <span x-text="getDirectorNames(movie.directors)"></span><br>
+                                <strong>Acteurs:</strong> <span x-text="getActorNames(movie.actors)"></span>
+                            </p>
 
-                <!-- Movie Card 2 - Tick, tick... BOOM! -->
-                <article class="movie-card">
-                    <div class="movie-poster">
-                        <img src="https://image.tmdb.org/t/p/original/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" alt="Tick, tick... BOOM!">
-                    </div>
-                    <div class="movie-card-content">
-                        <h2 class="movie-card-title">Tick, tick... BOOM!</h2>
-                        <p class="movie-card-meta">19/11/2021 | PG | 1h 56min</p>
-                        <p class="movie-card-genre">Drame, Musical</p>
-
-                        <div class="movie-card-synopsis">
-                            <h3>Synopsis</h3>
-                            <p>À l'approche de ses 30 ans, un jeune compositeur prometteur jongle entre l'amour, l'amitié et l'envie de réussir quelque chose de grandiose avant qu'il ne soit trop tard.</p>
+                            <a x-bind:href="'movie-details.html?id=' + movie.documentId"
+                               class="btn-card-action waves-effect waves-light">
+                                Accéder à la fiche du film
+                            </a>
                         </div>
+                    </article>
+                </template>
 
-                        <p class="movie-card-credits">
-                            <strong>Réalisateur:</strong> Lin-Manuel Miranda<br>
-                            <strong>Acteurs:</strong> Andrew Garfield, Alexandra Shipp, Robin de Jesús ...
-                        </p>
-
-                        <button class="btn-card-action waves-effect waves-light">Accéder à la fiche du film</button>
-                    </div>
-                </article>
-
-                <!-- Add more movie cards as needed -->
+                <!-- Empty State -->
+                <div x-show="!isLoading && movies.length === 0" class="empty-state" style="grid-column: 1/-1; text-align: center; padding: 48px;">
+                    <p>Aucun film trouvé.</p>
+                </div>
             </section>
         </div>
     </main>
@@ -219,6 +173,7 @@
 
     <!-- Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
+    <script type="module" src="js/movies.js"></script>
 </body>
 </html>

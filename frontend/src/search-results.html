@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cineverse - Résultats de recherche</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body x-data="searchResultsPage">
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-cine">Cine</span><span class="logo-verse">verse</span>
+            </a>
+
+            <nav class="main-nav">
+                <a href="movies.html" class="nav-link">Films</a>
+                <a href="actors.html" class="nav-link">Acteurs</a>
+                <a href="directors.html" class="nav-link">Réalisateurs</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-bar">
+                    <span class="material-icons search-icon">search</span>
+                    <input type="text"
+                           placeholder="Je recherche ..."
+                           x-model="searchQuery"
+                           @keypress.enter="performSearch()">
+                </div>
+                <button class="btn-connexion waves-effect waves-light">Connexion</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Home</a> > Résultats de recherche
+    </div>
+
+    <!-- Main Content -->
+    <main class="search-results-page" style="padding: 32px; max-width: 1400px; margin: 0 auto;">
+        <h1 class="page-title" style="margin-bottom: 24px;">
+            Résultats pour "<span x-text="searchQuery"></span>"
+        </h1>
+
+        <!-- Loading State -->
+        <div x-show="isLoading" style="text-align: center; padding: 48px;">
+            <p>Recherche en cours...</p>
+        </div>
+
+        <!-- Results Summary -->
+        <div x-show="!isLoading && hasResults()" style="margin-bottom: 32px;">
+            <p style="color: var(--text-secondary);">
+                <strong x-text="getTotalResults()"></strong> résultat(s) trouvé(s)
+            </p>
+        </div>
+
+        <!-- No Results -->
+        <div x-show="!isLoading && !hasResults()" style="text-align: center; padding: 48px;">
+            <p style="color: var(--text-secondary);">Aucun résultat trouvé pour "<span x-text="searchQuery"></span>"</p>
+        </div>
+
+        <!-- Movies Results -->
+        <section x-show="movies.length > 0" style="margin-bottom: 48px;">
+            <h2 style="font-size: 24px; margin-bottom: 16px; color: var(--primary-color);">
+                Films (<span x-text="movies.length"></span>)
+            </h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px;">
+                <template x-for="movie in movies" :key="movie.documentId">
+                    <a x-bind:href="'movie-details.html?id=' + movie.documentId"
+                       style="text-decoration: none; color: inherit;">
+                        <div style="background: var(--background-elevation-1); border-radius: 8px; overflow: hidden; transition: transform 0.2s; cursor: pointer;"
+                             class="search-result-card">
+                            <img x-bind:src="movie.poster_path || 'https://via.placeholder.com/200x300?text=' + encodeURIComponent(movie.title)"
+                                 x-bind:alt="movie.title"
+                                 style="width: 100%; aspect-ratio: 2/3; object-fit: cover;">
+                            <div style="padding: 12px;">
+                                <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 4px;" x-text="movie.title"></h3>
+                                <p style="font-size: 12px; color: var(--text-secondary);" x-text="movie.release_date ? new Date(movie.release_date).getFullYear() : ''"></p>
+                            </div>
+                        </div>
+                    </a>
+                </template>
+            </div>
+        </section>
+
+        <!-- Actors Results -->
+        <section x-show="actors.length > 0" style="margin-bottom: 48px;">
+            <h2 style="font-size: 24px; margin-bottom: 16px; color: var(--primary-color);">
+                Acteurs (<span x-text="actors.length"></span>)
+            </h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px;">
+                <template x-for="actor in actors" :key="actor.documentId">
+                    <a x-bind:href="'details.html?id=' + actor.documentId + '&type=actor'"
+                       style="text-decoration: none; color: inherit;">
+                        <div style="background: var(--background-elevation-1); border-radius: 8px; overflow: hidden; transition: transform 0.2s; cursor: pointer;"
+                             class="search-result-card">
+                            <img x-bind:src="actor.profile_path || 'https://via.placeholder.com/200x300?text=' + encodeURIComponent(actor.name)"
+                                 x-bind:alt="actor.name"
+                                 style="width: 100%; aspect-ratio: 2/3; object-fit: cover;">
+                            <div style="padding: 12px;">
+                                <h3 style="font-size: 14px; font-weight: 600;" x-text="actor.name"></h3>
+                            </div>
+                        </div>
+                    </a>
+                </template>
+            </div>
+        </section>
+
+        <!-- Directors Results -->
+        <section x-show="directors.length > 0" style="margin-bottom: 48px;">
+            <h2 style="font-size: 24px; margin-bottom: 16px; color: var(--primary-color);">
+                Réalisateurs (<span x-text="directors.length"></span>)
+            </h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px;">
+                <template x-for="director in directors" :key="director.documentId">
+                    <a x-bind:href="'details.html?id=' + director.documentId + '&type=director'"
+                       style="text-decoration: none; color: inherit;">
+                        <div style="background: var(--background-elevation-1); border-radius: 8px; overflow: hidden; transition: transform 0.2s; cursor: pointer;"
+                             class="search-result-card">
+                            <img x-bind:src="director.profile_path || 'https://via.placeholder.com/200x300?text=' + encodeURIComponent(director.name)"
+                                 x-bind:alt="director.name"
+                                 style="width: 100%; aspect-ratio: 2/3; object-fit: cover;">
+                            <div style="padding: 12px;">
+                                <h3 style="font-size: 14px; font-weight: 600;" x-text="director.name"></h3>
+                            </div>
+                        </div>
+                    </a>
+                </template>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <a href="#" class="footer-link">Aide</a>
+                <a href="#" class="footer-link">Index du site</a>
+                <a href="#" class="footer-link">Emplois</a>
+            </div>
+
+            <div class="footer-column">
+                <a href="#" class="footer-link">Politique de confidentialité</a>
+                <a href="#" class="footer-link">Conditions d'utilisation</a>
+                <a href="#" class="footer-link">Salle de Presse</a>
+            </div>
+
+            <div class="footer-column footer-social">
+                <p class="social-title">Suivez Cineverse sur les réseaux sociaux</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" aria-label="TikTok">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <span class="material-icons">photo_camera</span>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="YouTube">
+                        <span class="material-icons">play_circle_filled</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/script.js"></script>
+    <script type="module" src="js/search-results.js"></script>
+</body>
+</html>

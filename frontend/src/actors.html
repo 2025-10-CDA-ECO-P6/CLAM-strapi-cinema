@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cineverse - Accueil</title>
+    <title>Cineverse - Acteurs</title>
     <!-- Materialize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body x-data="actorsPage">
     <!-- Header -->
     <header class="app-header">
         <div class="header-content">
@@ -21,17 +19,14 @@
 
             <nav class="main-nav">
                 <a href="movies.html" class="nav-link">Films</a>
-                <a href="actors.html" class="nav-link">Acteurs</a>
+                <a href="actors.html" class="nav-link active">Acteurs</a>
                 <a href="directors.html" class="nav-link">Réalisateurs</a>
             </nav>
 
             <div class="header-actions">
                 <div class="search-bar">
                     <span class="material-icons search-icon">search</span>
-                    <input type="text"
-                           placeholder="Je recherche ..."
-                           x-model="searchQuery"
-                           @keypress.enter="searchMovies()">
+                    <input type="text" placeholder="Je recherche ..." x-model="searchQuery" @input="filterActors">
                 </div>
                 <button class="btn-connexion waves-effect waves-light">Connexion</button>
             </div>
@@ -40,51 +35,79 @@
 
     <!-- Breadcrumb -->
     <div class="breadcrumb">
-        <a href="#">Home</a> >
+        <a href="index.html">Home</a> > <a href="actors.html">Acteurs</a>
     </div>
 
-    <!-- Hero Carousel avec Swiper -->
-    <section class="hero-carousel" x-data="movies" x-cloak>
-        <!-- Swiper -->
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <!-- Slide -->
-                 <template x-for="item in items" :key="item.id">
-                    <div class="swiper-slide">
-                        <div class="movie-backdrop" x-bind:style="'background: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3) 100%), url('+item.poster_path+') center/cover;'">
-                        </div>
-                        <div class="movie-content">
-                            <h1 class="movie-title" x-text="item.title"></h1>
-                            <div class="movie-info">
-                                <h2 class="section-title">Synopsis</h2>
-                                <p class="movie-synopsis" x-text="item.overview"></p>
-                                <h3 class="genre-title">Genre</h3>
-                                <p class="genre-text" x-text="item.genres?.map(g => g.name).join(', ') || ''"></p>
-                                <div class="movie-meta">
-                                    <div class="rating">
-                                        <span class="material-icons rating-icon">movie</span>
-                                        <span class="rating-value" x-text="item.vote_average + '/10'"></span>
-                                    </div>
-                                    <div class="duration">
-                                        <span class="material-icons duration-icon">schedule</span>
-                                        <span class="duration-value" x-text="new Date(item.release_date).toLocaleDateString('fr-FR')"></span>
-                                    </div>
-                                </div>
-                                <a x-bind:href="'movie-details.html?id=' + item.documentId" class="btn-primary waves-effect waves-light">Accéder aux informations</a>
-                            </div>
-                        </div>
+    <!-- Main Content -->
+    <main class="movies-page" x-cloak>
+        <div class="movies-container">
+            <!-- Sidebar Filters -->
+            <aside class="filters-sidebar">
+                <h1 class="page-title">Je cherche ...</h1>
+
+                <div class="sort-section">
+                    <span class="sort-label">Trier Par</span>
+                    <div class="select-wrapper">
+                        <select class="filter-select" x-model="sortBy" @change="sortActors">
+                            <option value="name_asc">Nom (A-Z)</option>
+                            <option value="name_desc">Nom (Z-A)</option>
+                            <option value="popularity">Popularité</option>
+                        </select>
+                        <span class="material-icons select-icon">expand_more</span>
                     </div>
+                </div>
+
+                <div class="filter-info">
+                    <p class="filter-label" x-text="actors.length + ' acteurs trouvés'"></p>
+                </div>
+            </aside>
+
+            <!-- Actors Grid -->
+            <section class="directors-grid-page">
+                <template x-for="actor in actors" :key="actor.id">
+                    <article class="director-card-page">
+                        <a x-bind:href="'details.html?id=' + actor.documentId + '&type=actor'" class="director-card-link">
+                            <div class="director-image-page">
+                                <img x-bind:src="actor.profile_path || 'https://via.placeholder.com/300x450?text=No+Image'"
+                                     x-bind:alt="actor.name">
+                            </div>
+                            <div class="director-card-content">
+                                <h2 class="director-card-title" x-text="actor.name"></h2>
+                                <p class="director-card-role">Acteur</p>
+
+                                <div class="director-card-bio" x-show="actor.biography">
+                                    <p class="director-bio-text" x-text="truncateBio(actor.biography)"></p>
+                                </div>
+
+                                <div class="director-card-info" x-show="actor.birthday || actor.place_of_birth">
+                                    <p x-show="actor.birthday">
+                                        <strong>Né le:</strong> <span x-text="formatDate(actor.birthday)"></span>
+                                    </p>
+                                    <p x-show="actor.place_of_birth">
+                                        <strong>Lieu:</strong> <span x-text="actor.place_of_birth"></span>
+                                    </p>
+                                </div>
+
+                                <div class="director-card-movies" x-show="actor.movies && actor.movies.length > 0">
+                                    <strong>Films:</strong> <span x-text="actor.movies.length"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
                 </template>
-            </div>
 
-            <!-- Navigation buttons -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+                <!-- Loading state -->
+                <div x-show="loading" class="loading-state">
+                    <p>Chargement des acteurs...</p>
+                </div>
 
-            <!-- Pagination -->
-            <div class="swiper-pagination"></div>
+                <!-- Empty state -->
+                <div x-show="!loading && actors.length === 0" class="empty-state">
+                    <p>Aucun acteur trouvé.</p>
+                </div>
+            </section>
         </div>
-    </section>
+    </main>
 
     <!-- Footer -->
     <footer class="app-footer">
@@ -127,9 +150,7 @@
 
     <!-- Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="js/script.js"></script>
-    <script type="module" src="js/index.js"></script>
+    <!-- Alpine.js -->
+    <script type="module" src="js/actors.js"></script>
 </body>
 </html>
