@@ -27,7 +27,6 @@ export default [
       'indent': ['error', 2],
       'linebreak-style': ['error', 'unix'],
       'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
-      'quotes': ['error', 'single'],
       'semi': ['error', 'always'],
       'no-console': 'warn',
       'no-debugger': 'error',
