@@ -31,17 +31,17 @@ Le panneau d’administration est accessible sur : `http://localhost:1337/admin`
 `cd /backend`
 `npm install`
 ### 3. Configurer le variables de la base de donnée et la clé TMDb dans le fichier `.env` : 
-`
-DATABASE_CLIENT=your_database_client
-DATABASE_HOST=your_database_host
-DATABASE_PORT=your_database_port
-DATABASE_NAME=your_database_name
-DATABASE_USERNAME=your_database_username
-DATABASE_PASSWORD=your_database_password
-DATABASE_SSL=false
-DATABASE_FILENAME=.tmp/data.db
-TMDB_API_KEY=your_api_key_here
-`
+
+`DATABASE_CLIENT=your_database_client`
+`DATABASE_HOST=your_database_host` 
+`DATABASE_PORT=your_database_port`  
+`DATABASE_NAME=your_database_name` 
+`DATABASE_USERNAME=your_database_username`  
+`DATABASE_PASSWORD=your_database_password`  
+`DATABASE_SSL=false`  
+`DATABASE_FILENAME=.tmp/data.db` 
+`TMDB_API_KEY=your_api_key_here`  
+
 ### 4. Lancer le serveur Strapi : 
 `npm run develop`
 
