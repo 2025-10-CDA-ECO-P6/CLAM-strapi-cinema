@@ -57,6 +57,7 @@ Le panneau d’administration est accessible sur : `http://localhost:1337/admin`
 - Intégration données externes de TMDb
 - Frontend statique HTML/CSS + JavaScript vanilla
 - GitHub Actions pour CI (lint, tests automatiques)
+- [![CI - Front & Back Cineverse(Strapi)](https://github.com/2025-10-CDA-ECO-P6/CLAM-strapi-cinema/actions/workflows/ci.yml/badge.svg)](https://github.com/2025-10-CDA-ECO-P6/CLAM-strapi-cinema/actions/workflows/ci.yml)
 
 ## :lock:	Sécurité
 - API protégée par JWT
