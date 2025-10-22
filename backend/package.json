@@ -18,9 +18,9 @@
     "import:tmdb": "node ./scripts/import.js"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.27.0",
+    "@strapi/plugin-cloud": "5.28.0",
     "@strapi/plugin-documentation": "^5.28.0",
-    "@strapi/plugin-users-permissions": "5.27.0",
+    "@strapi/plugin-users-permissions": "5.28.0",
     "axios": "^1.12.2",
     "better-sqlite3": "11.3.0",
     "fs-extra": "^10.0.0",
