@@ -8,10 +8,12 @@
 }
 
 :root {
-    /* Material Design Colors */
-    --primary-color: #E91E63;
-    --primary-dark: #C2185B;
-    --accent-color: #FF4081;
+    /* Red Dark Color Scheme */
+    --primary-color: #8B0000;
+    --primary-dark: #6B0000;
+    --primary-light: #A00000;
+    --accent-color: #DC143C;
+    --accent-light: #B22222;
     --background-dark: #121212;
     --background-elevation-1: #1E1E1E;
     --background-elevation-2: #2C2C2C;
@@ -186,6 +188,36 @@ body {
 .btn-connexion:active {
     transform: translateY(0);
     box-shadow: var(--shadow-1);
+}
+
+/* ===================================
+   WELCOME BANNER
+   =================================== */
+.welcome-banner {
+    background: linear-gradient(90deg,
+        rgba(139, 0, 0, 0) 0%,
+        rgba(139, 0, 0, 0.4) 20%,
+        rgba(139, 0, 0, 0.4) 80%,
+        rgba(139, 0, 0, 0) 100%);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(220, 20, 60, 0.3);
+}
+
+.welcome-banner-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* ===================================
@@ -768,7 +800,7 @@ body {
 .moviesSwiper .swiper-button-prev {
     width: 44px;
     height: 44px;
-    background-color: rgba(233, 30, 99, 0.9);
+    background-color: rgba(139, 0, 0, 0.9);
     border-radius: 50%;
 }
 
@@ -1160,8 +1192,8 @@ body {
 }
 
 .genre-tag {
-    background-color: rgba(233, 30, 99, 0.2);
-    color: var(--primary-color);
+    background-color: rgba(139, 0, 0, 0.2);
+    color: var(--accent-color);
     padding: 6px 16px;
     border-radius: 20px;
     font-size: 14px;
@@ -1219,7 +1251,7 @@ body {
 .actorsSwiper .swiper-button-prev {
     width: 44px;
     height: 44px;
-    background-color: rgba(233, 30, 99, 0.9);
+    background-color: rgba(139, 0, 0, 0.9);
     border-radius: 50%;
 }
 
@@ -1241,7 +1273,7 @@ body {
 .directorsSwiper .swiper-button-prev {
     width: 44px;
     height: 44px;
-    background-color: rgba(233, 30, 99, 0.9);
+    background-color: rgba(139, 0, 0, 0.9);
     border-radius: 50%;
 }
 
@@ -1327,7 +1359,7 @@ body {
 
 .social-icon {
     color: var(--text-primary);
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--accent-color);
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -1339,7 +1371,7 @@ body {
 }
 
 .social-icon:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--primary-color);
     transform: translateY(-2px);
 }
 

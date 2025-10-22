@@ -20,7 +20,10 @@ npm run develop      # Start with auto-reload (dev mode)
 npm run build        # Build admin panel for production
 npm run start        # Start without auto-reload (production)
 npm run import:tmdb  # Manual TMDb data import
+npm run lint         # Run ESLint
 ```
+
+**Node.js Requirements**: Node.js >=18.0.0 <=22.x.x, npm >=6.0.0
 
 ### Frontend
 ```bash
@@ -46,11 +49,11 @@ backend/src/api/{collection}/
 └── content-types/{collection}/schema.json
 ```
 
-**Collections**: `movie`, `actor`, `director`, `genre`
+**Collections**: `movie`, `actor`, `director`, `genre`, `favorite`
 
 ### Content Type Relations
-- **Movie**: Many-to-many with Actor, Director, Genre
-- All entities have `db_id` field (biginteger, unique) storing TMDb external ID
+- **Movie**: Many-to-many with Actor, Director, Genre; many-to-one with Favorite
+- All entities (except favorite) have `db_id` field (biginteger, unique) storing TMDb external ID
 - All relations are bidirectional (e.g., movies ↔ actors)
 
 ### API Patterns
@@ -61,18 +64,21 @@ backend/src/api/{collection}/
 
 ### Frontend Architecture
 - Alpine.js for reactive components (loaded from CDN)
-- Axios API client with JWT interceptor ([frontend/src/api.js](frontend/src/api.js))
+- Axios API client with JWT interceptor ([frontend/src/js/api.js](frontend/src/js/api.js))
 - JWT stored in localStorage, automatically attached to requests
-- No build step - static files served directly
+- No build step - static files served directly from Express
+- HTML pages in `frontend/src/`, JavaScript modules in `frontend/src/js/`
+- Pages: index (homepage), movies, actors, directors, details, movie-details, search-results
 
 ### TMDb Integration
 **Import Script**: [backend/scripts/import.js](backend/scripts/import.js)
-- Fetches 5 pages of popular movies by default (configurable via `PAGES_TO_FETCH`)
-- Rate limiting: 550ms delay between requests
+- Fetches 1 page of popular movies by default (configurable via `PAGES_TO_FETCH` on line 53)
+- Rate limiting: 550ms delay between requests (TMDb API requirement)
 - Checks for duplicates using `db_id` before creating records
 - Import order: genres → actors/directors → movies
 - Scheduled daily at 17:30 Europe/Paris (configured in [backend/config/cronjob.js](backend/config/cronjob.js))
 - Language: French (`fr-FR` for content, `fr` for genres)
+- Maximum: 500 pages (TMDb API limit)
 
 ## Environment Configuration
 
@@ -96,7 +102,12 @@ Use `backend/.env.example` as template.
 **Default**: SQLite at `backend/.tmp/data.db`
 - File-based, zero configuration
 - Persistent across restarts
-- Can be switched to MySQL/PostgreSQL via `backend/config/database.js`
+
+**Switching Database**: Edit [backend/config/database.js](backend/config/database.js)
+- Supports SQLite (default), MySQL, PostgreSQL
+- Set `DATABASE_CLIENT` environment variable to `mysql` or `postgres`
+- Configure connection details in `.env` (host, port, username, password, database name)
+- MySQL/PostgreSQL require connection pooling (min: 2, max: 10 by default)
 
 ## Key Files and Conventions
 
@@ -107,10 +118,11 @@ Use `backend/.env.example` as template.
 - [backend/config/cronjob.js](backend/config/cronjob.js) - Scheduled tasks
 
 ### Frontend Key Files
-- [frontend/src/api.js](frontend/src/api.js) - Axios instance with JWT interceptor
-- [frontend/src/authentication.js](frontend/src/authentication.js) - Auth functions (login, register, logout)
-- [frontend/src/index.js](frontend/src/index.js) - Alpine.js data components
-- [frontend/server.js](frontend/server.js) - Express static file server
+- [frontend/src/js/api.js](frontend/src/js/api.js) - Axios instance with JWT interceptor
+- [frontend/src/js/authentication.js](frontend/src/js/authentication.js) - Auth functions (login, register, logout)
+- [frontend/src/js/index.js](frontend/src/js/index.js) - Alpine.js data components for homepage
+- [frontend/server.js](frontend/server.js) - Express static file server (port 3001)
+- [frontend/styles.css](frontend/styles.css) - Global styles (Materialize CSS framework)
 
 ### Naming Conventions
 - Collections: singular (movie, actor, director)
@@ -125,6 +137,15 @@ JWT-based authentication via Strapi Users & Permissions plugin:
 - `POST /api/auth/local` - Login (returns JWT)
 - `GET /api/users/me` - Get current user
 - JWT automatically attached to requests via interceptor
+
+## Strapi Admin Panel
+
+Access at `http://localhost:1337/admin`
+- First run requires creating admin account
+- Use Content Manager to manually add/edit movies, actors, directors, genres
+- Content-Type Builder allows schema modifications (reflects to code)
+- Users & Permissions plugin manages roles and API access
+- Settings → Roles → Public controls unauthenticated API access
 
 ## Important Notes
 
@@ -149,22 +170,31 @@ module.exports = createCoreController('api::movie.movie', ({ strapi }) => ({
 
 ### TMDb Import Modifications
 To change import scope, edit `PAGES_TO_FETCH` in [backend/scripts/import.js](backend/scripts/import.js):53
+- Default: 1 page (~20 movies)
 - Maximum: 500 pages (TMDb API limit)
-- Respect 550ms delay to avoid rate limiting
+- Must respect 550ms delay to avoid rate limiting
 
 ### Frontend API URL
-Hardcoded in [frontend/src/api.js](frontend/src/api.js):4 as `http://localhost:1337/api`
+Hardcoded in [frontend/src/js/api.js](frontend/src/js/api.js):4 as `http://localhost:1337/api`
 - Change if deploying or using different backend URL
 
 ## Git Workflow
 
 - Main branch: `main`
-- Current development: `feature/us-17_frontend`
 - Project uses feature branches (pattern: `feature/{ticket}_description`)
+- Example: `feature/us-17_authentication`, `feature/us-17_frontend`
+
+## Code Quality
+
+### Backend Linting
+- ESLint configured via `eslint.config.mjs`
+- Rules: 2-space indentation, Unix line breaks, semicolons required
+- Unused vars allowed if prefixed with underscore
+- Run with: `npm run lint` (from backend directory)
 
 ## Known Gaps
 
 - No testing framework configured (Jest/Mocha recommended)
-- No ESLint/Prettier setup
+- No Prettier setup for code formatting
 - GitHub Actions CI/CD mentioned in README but not implemented
-- Frontend pages partially complete (homepage done, other pages in progress)
+- Frontend has no linting configured
