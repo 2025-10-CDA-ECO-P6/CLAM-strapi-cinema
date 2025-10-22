@@ -8,10 +8,12 @@
 }
 
 :root {
-    /* Material Design Colors */
-    --primary-color: #8B001F;
-    --primary-dark: #4D000E;
-    --accent-color: #D32F4F;
+    /* Red Dark Color Scheme */
+    --primary-color: #8B0000;
+    --primary-dark: #6B0000;
+    --primary-light: #A00000;
+    --accent-color: #DC143C;
+    --accent-light: #B22222;
     --background-dark: #121212;
     --background-elevation-1: #1E1E1E;
     --background-elevation-2: #2C2C2C;
