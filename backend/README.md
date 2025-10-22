@@ -40,6 +40,18 @@ Strapi gives you many possible deployment options for your project including [St
 yarn strapi deploy
 ```
 
+## 🛠️ Continuous integration (CI)
+
+[![CI - Front & Back Cineverse(Strapi)](https://github.com/2025-10-CDA-ECO-P6/CLAM-strapi-cinema/actions/workflows/ci.yml/badge.svg)](https://github.com/2025-10-CDA-ECO-P6/CLAM-strapi-cinema/actions/workflows/ci.yml)
+
+For the backend CI we have created a simple job with 3 major steps :
+
+- npm ci to install dependencies
+- npm run lint to run the linter script
+- npm run build to test if the build script from strapi works
+
+All the test can be run localy when executing the previously mentioned commands in the ./backend directory
+
 ## 📚 Learn more
 
 - [Resource center](https://strapi.io/resource-center) - Strapi resource center.
